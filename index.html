@@ -1,13 +1,13 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+<title>My Online Portfolio</title>
+<meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
 
-  <title>My Online Portfolio</title>
-
-  <script src="https://d3js.org/d3.v4.js"></script>
+   <!-- Load Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
   <style>
     body {
@@ -26,11 +26,7 @@
       text-align: center;
     }
 
-    #my_dataviz {
-      text-align: center;
-      margin: 20px auto;
-      overflow-x: auto;
-    }
+    
 
     .image {
       background: #cecece;
@@ -48,6 +44,12 @@
       height: 100%;
       object-fit: contain;
     }
+    
+    .chart-container {
+    width: 90%;
+    max-width: 800px;
+    margin: 30px auto;
+  }
   </style>
 </head>
 
@@ -65,91 +67,54 @@
     >
   </div>
 
-  <div id="my_dataviz"></div>
+   <!-- <div style="width: 500px;"><canvas id="dimensions"></canvas></div><br/> -->
+    <div class="chart-container">
+  <canvas id="chart"></canvas>
+   </div>
 
-  <script>
-    // Set the dimensions and margins of the graph
-    var margin = {
-      top: 30,
-      right: 30,
-      bottom: 100,
-      left: 60
-    };
+ 
+    <script>
+    const ctx = document.getElementById("chart");
 
-    var width = 600 - margin.left - margin.right;
-    var height = 400 - margin.top - margin.bottom;
+    new Chart(ctx, {
+      type: "line",
 
-    // Append the SVG object to the chart container
-    var svg = d3.select("#my_dataviz")
-      .append("svg")
-      .attr("width", width + margin.left + margin.right)
-      .attr("height", height + margin.top + margin.bottom)
-      .append("g")
-      .attr(
-        "transform",
-        "translate(" + margin.left + "," + margin.top + ")"
-      );
+      data: {
+        labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
+        datasets: [{
+          label: "Revenue",
+          data: [1200, 1900, 1500, 2500, 2200, 3100],
 
-    // Load the CSV data
-    d3.csv(
-      "https://raw.githubusercontent.com/holtzy/data_to_viz/master/Example_dataset/7_OneCatOneNum_header.csv",
-      function(error, data) {
-        if (error) {
-          console.error("Error loading chart data:", error);
-          d3.select("#my_dataviz")
-            .append("p")
-            .text("Unable to load chart data.");
-          return;
+          borderColor: "#6366f1",
+          backgroundColor: "rgba(99, 102, 241, 0.15)",
+          borderWidth: 3,
+          fill: true,
+          tension: 0.35,
+
+          pointRadius: 4,
+          pointBackgroundColor: "#6366f1"
+        }]
+      },
+
+      options: {
+        responsive: true,
+        maintainAspectRatio: true,
+
+        plugins: {
+          legend: {
+            display: true
+          }
+        },
+
+        scales: {
+          y: {
+            beginAtZero: true
+          }
         }
-
-        // Convert values to numbers
-        data.forEach(function(d) {
-          d.Value = +d.Value;
-        });
-
-        // X axis
-        var x = d3.scaleBand()
-          .range([0, width])
-          .domain(data.map(function(d) {
-            return d.Country;
-          }))
-          .padding(0.2);
-
-        svg.append("g")
-          .attr("transform", "translate(0," + height + ")")
-          .call(d3.axisBottom(x))
-          .selectAll("text")
-          .attr("transform", "translate(-10,0)rotate(-45)")
-          .style("text-anchor", "end");
-
-        // Y axis
-        var y = d3.scaleLinear()
-          .domain([0, 13000])
-          .range([height, 0]);
-
-        svg.append("g")
-          .call(d3.axisLeft(y));
-
-        // Bars
-        svg.selectAll(".bar")
-          .data(data)
-          .enter()
-          .append("rect")
-          .attr("class", "bar")
-          .attr("x", function(d) {
-            return x(d.Country);
-          })
-          .attr("y", function(d) {
-            return y(d.Value);
-          })
-          .attr("width", x.bandwidth())
-          .attr("height", function(d) {
-            return height - y(d.Value);
-          })
-          .attr("fill", "#69b3a2");
       }
-    );
+    });
   </script>
+ 
 </body>
 </html>
 
