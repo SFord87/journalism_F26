@@ -5,9 +5,7 @@
 <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-
-   <!-- Load Chart.js -->
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+ <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
   <style>
     body {
@@ -25,8 +23,6 @@
       font-family: "Lucida Console", monospace;
       text-align: center;
     }
-
-    
 
     .image {
       background: #cecece;
@@ -49,7 +45,7 @@
     width: 90%;
     max-width: 800px;
     margin: 30px auto;
-  }
+    }
   </style>
 </head>
 
@@ -67,7 +63,6 @@
     >
   </div>
 
-   <!-- <div style="width: 500px;"><canvas id="dimensions"></canvas></div><br/> -->
     <div class="chart-container">
   <canvas id="chart"></canvas>
    </div>
@@ -80,19 +75,19 @@
       type: "line",
 
       data: {
-        labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
+        labels: ["Monday","Tuesday","Wednesday","Thursday","Friday"],
         datasets: [{
-          label: "Revenue",
-          data: [1200, 1900, 1500, 2500, 2200, 3100],
+          label: "Coffee Spending",
+          data: [6.00,12.00,12.00,18.00,18.00],
 
-          borderColor: "#6366f1",
-          backgroundColor: "rgba(99, 102, 241, 0.15)",
+          borderColor: "FF0145",
+          backgroundColor: "#E3DCDC",
           borderWidth: 3,
           fill: true,
           tension: 0.35,
 
           pointRadius: 4,
-          pointBackgroundColor: "#6366f1"
+          pointBackgroundColor: "FF0145"
         }]
       },
 
